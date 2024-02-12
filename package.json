@@ -1,0 +1,19 @@
+{
+  "name": "CRUD-API",
+  "version": "1.0.0",
+  "description": "Simple CRUD API",
+  "author": "GoodValts",
+  "license": "ISC",
+  "engines": {
+    "node": ">=20.0.0"
+  },
+  "scripts": {
+    
+  },
+  "devDependencies": {
+    
+  },
+  "dependencies": {
+    
+  }
+}
