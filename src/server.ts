@@ -1,1 +1,0 @@
-console.log('TBD\njust need a few days\nYou can leave your contacts, so that I can notify you as soon as everything is ready');
