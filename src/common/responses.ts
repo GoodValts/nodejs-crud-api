@@ -1,33 +1,10 @@
-interface UserData {
-  id?: string;
-  username: string;
-  age: number;
-  hobbies: string[];
-}
-
-interface SuccessMessage {
-  statusCode: number;
-  data: string;
-}
-
-interface ErrorMessage {
-  statusCode: number;
-  message: string;
-}
-
-interface SuccessResponse {
-  (data: UserData): SuccessMessage;
-}
-
-interface ErrorResponse {
-  (id: string): ErrorMessage;
-}
+import { ErrorResponse, Responses, UserData } from './types';
 
 const createDataResponse = (statusCode: number) => {
-  return (data: UserData) => {
+  return (data: UserData | UserData[]) => {
     return {
       statusCode: statusCode,
-      data: JSON.stringify(data),
+      message: JSON.stringify(data),
     };
   };
 };
@@ -44,33 +21,6 @@ const createMessageResponse = (
       statusCode: statusCode,
       message: strArr.join(''),
     };
-  };
-};
-
-type Responses = {
-  get: SuccessResponse;
-  getUser: {
-    SUCCESS: SuccessResponse;
-    INVALID_ID: ErrorResponse;
-    NOT_EXIST: ErrorResponse;
-  };
-  postUser: {
-    SUCCESS: SuccessResponse;
-    BAD_REQUEST_PARAMS: ErrorMessage;
-  };
-  putUser: {
-    SUCCESS: SuccessResponse;
-    INVALID_ID: ErrorResponse;
-    NOT_EXIST: ErrorResponse;
-  };
-  deleteUser: {
-    SUCCESS: ErrorResponse;
-    INVALID_ID: ErrorResponse;
-    NOT_EXIST: ErrorResponse;
-  };
-  serverErrors: {
-    BROKEN_ROUTE: ErrorMessage;
-    SERVER_UNAVAILABLE: ErrorMessage;
   };
 };
 

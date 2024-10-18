@@ -1,5 +1,7 @@
 import { IncomingMessage, ServerResponse } from 'http';
 import { responses } from '../common/responses';
+import { ErrorMessage, SuccessMessage } from '../common/types';
+import { useCreateUser, useGetUsers } from '../common/actionHooks';
 
 const API_PATH = '/api/users';
 const CONTENT_TYPE = { 'Content-Type': 'application/json' };
@@ -11,7 +13,8 @@ const requestListener = async (
   const url = request.url;
   const method = request.method;
 
-  let responseData = responses.serverErrors.BROKEN_ROUTE;
+  let responseData: ErrorMessage | SuccessMessage =
+    responses.serverErrors.BROKEN_ROUTE;
 
   if (url?.startsWith(API_PATH)) {
     const endPoint = url.replace(API_PATH, '');
@@ -32,8 +35,10 @@ const requestListener = async (
     } else if (endPoint === '' || endPoint === '/') {
       switch (method) {
         case 'GET':
+          responseData = useGetUsers();
           break;
         case 'POST':
+          responseData = (await useCreateUser(request)) as typeof responseData;
           break;
         default:
           break;
