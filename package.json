@@ -23,7 +23,7 @@
   "scripts": {
     "start:dev": "nodemon src/index.ts",
     "start:prod": "tsc && node dist/index.js",
-    "start:multi": "",
+    "start:multi": "nodemon src/cluster.ts",
     "test": "jest",
     "test:coverage": "jest --coverage",
     "lint": "eslint --fix",

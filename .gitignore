@@ -3,4 +3,5 @@ dist
 coverage
 .env
 
-src/log
+src/log.txt
+responses.txt

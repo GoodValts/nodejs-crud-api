@@ -21,7 +21,7 @@ process.on('SIGINT', () => {
 
   server.close(async () => {
     try {
-      const fileName = '/log/log.txt';
+      const fileName = '/log.txt';
 
       const writeStream = fs.createWriteStream(path.join(__dirname, fileName), {
         flags: 'w',
@@ -30,16 +30,24 @@ process.on('SIGINT', () => {
       writeStream.on('finish', () => {
         console.log(
           '\n\x1b[36m%s\x1b[37m',
-          `${fileName.slice(5)} created successfully!`,
+          `${fileName.slice(1)} created successfully!`,
         );
         process.exit(0);
+      });
+
+      writeStream.on('error', (err) => {
+        console.log(
+          '\x1b[31m\n%s\x1b[0m',
+          `Error occurred while writing log.txt: ${err.message}`,
+        );
+        console.log('\nLog:\n', JSON.stringify(userStorage.getUsers()));
+        process.exit(1);
       });
 
       writeStream.write(JSON.stringify(userStorage.getUsers()), 'utf8');
       writeStream.end();
     } catch (err) {
       console.log('Log:\n', userStorage.getUsers(), '\n');
-      console.error(err);
       process.exit(1);
     } finally {
       console.log(

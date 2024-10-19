@@ -10,7 +10,7 @@ import {
 } from '../common/actions';
 
 const API_PATH = '/api/users';
-const CONTENT_TYPE = { 'Content-Type': 'application/json' };
+export const CONTENT_TYPE = { 'Content-Type': 'application/json' };
 
 const requestListener = async (
   request: IncomingMessage,
