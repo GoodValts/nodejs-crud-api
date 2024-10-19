@@ -3,12 +3,12 @@ import { v4 as uuid } from 'uuid';
 
 class UserStorage {
   private users: Required<UserData>[] = [
-    {
-      id: '528e2bed-f8d6-4aae-9b9c-d4fa645ba8ee',
-      username: 'user_loh',
-      age: 35,
-      hobbies: ['codding'],
-    },
+    // {
+    //   id: '528e2bed-f8d6-4aae-9b9c-d4fa645ba8ee',
+    //   username: 'user_loh',
+    //   age: 35,
+    //   hobbies: ['codding'],
+    // },
   ];
 
   public getUsers = () => this.users;
