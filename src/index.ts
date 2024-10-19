@@ -21,7 +21,7 @@ process.on('SIGINT', () => {
 
   server.close(async () => {
     try {
-      const fileName = 'log.txt';
+      const fileName = '/log/log.txt';
 
       const writeStream = fs.createWriteStream(path.join(__dirname, fileName), {
         flags: 'w',
@@ -30,7 +30,7 @@ process.on('SIGINT', () => {
       writeStream.on('finish', () => {
         console.log(
           '\n\x1b[36m%s\x1b[37m',
-          `${fileName} created successfully!`,
+          `${fileName.slice(5)} created successfully!`,
         );
         process.exit(0);
       });

@@ -6,9 +6,13 @@ export const validateUserInfo = (userInfo: UserData) => {
     age: 'number',
   };
 
-  Object.entries(required).forEach(([key, value]) => {
-    if (typeof userInfo[key as keyof UserData] === value) return false;
-  });
+  for (const key in required) {
+    if (
+      typeof userInfo[key as keyof UserData] !==
+      required[key as keyof typeof required]
+    )
+      return false;
+  }
 
   return (
     Array.isArray(userInfo.hobbies) &&

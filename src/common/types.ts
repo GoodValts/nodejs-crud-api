@@ -5,47 +5,45 @@ export interface UserData {
   hobbies: string[];
 }
 
-export interface SuccessMessage {
+export interface Message {
   statusCode: number;
   message: string;
 }
 
-export interface ErrorMessage {
-  statusCode: number;
-  message: string;
+export interface DataResponse {
+  (data: UserData | UserData[]): Message;
 }
 
-export interface SuccessResponse {
-  (data: UserData | UserData[]): SuccessMessage;
-}
-
-export interface ErrorResponse {
-  (id: string): ErrorMessage;
+export interface MessageResponse {
+  (id: string): Message;
 }
 
 export type Responses = {
-  get: SuccessResponse;
+  get: DataResponse;
   getUser: {
-    SUCCESS: SuccessResponse;
-    INVALID_ID: ErrorResponse;
-    NOT_EXIST: ErrorResponse;
+    SUCCESS: DataResponse;
+    INVALID_ID: MessageResponse;
+    NOT_EXIST: MessageResponse;
   };
   postUser: {
-    SUCCESS: SuccessResponse;
-    BAD_REQUEST_PARAMS: ErrorMessage;
+    SUCCESS: DataResponse;
+    BAD_REQUEST_PARAMS: Message;
+    REQUIRED_FIELDS_MISSING: Message;
   };
   putUser: {
-    SUCCESS: SuccessResponse;
-    INVALID_ID: ErrorResponse;
-    NOT_EXIST: ErrorResponse;
+    SUCCESS: DataResponse;
+    INVALID_ID: MessageResponse;
+    NOT_EXIST: MessageResponse;
+    BAD_REQUEST_PARAMS: Message;
+    REQUIRED_FIELDS_MISSING: Message;
   };
   deleteUser: {
-    SUCCESS: ErrorResponse;
-    INVALID_ID: ErrorResponse;
-    NOT_EXIST: ErrorResponse;
+    SUCCESS: MessageResponse;
+    INVALID_ID: MessageResponse;
+    NOT_EXIST: MessageResponse;
   };
   serverErrors: {
-    BROKEN_ROUTE: ErrorMessage;
-    SERVER_UNAVAILABLE: ErrorMessage;
+    BROKEN_ROUTE: Message;
+    SERVER_UNAVAILABLE: Message;
   };
 };

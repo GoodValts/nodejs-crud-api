@@ -1,1 +1,0 @@
-[{"id":"528e2bed-f8d6-4aae-9b9c-d4fa645ba8ee","username":"user_loh","age":35,"hobbies":["codding"]},{"id":"f7655c31-bd16-4ac9-9b1a-d5c5b2079e58","username":"ivan","age":25,"hobbies":["reading","sports"]}]

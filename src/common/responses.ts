@@ -1,4 +1,4 @@
-import { ErrorResponse, Responses, UserData } from './types';
+import { MessageResponse, Responses, UserData } from './types';
 
 const createDataResponse = (statusCode: number) => {
   return (data: UserData | UserData[]) => {
@@ -12,14 +12,11 @@ const createDataResponse = (statusCode: number) => {
 const createMessageResponse = (
   statusCode: number,
   message: string,
-): ErrorResponse => {
+): MessageResponse => {
   return (id: string) => {
-    const strArr = message.split('id');
-    if (id.length) strArr[1] = `id=${id}`.concat(strArr[1]);
-
     return {
       statusCode: statusCode,
-      message: strArr.join(''),
+      message: message.replace(/\b(id)\b/g, `id ${id}`),
     };
   };
 };
@@ -35,6 +32,10 @@ export const responses: Responses = {
     SUCCESS: createDataResponse(201),
     BAD_REQUEST_PARAMS: createMessageResponse(
       400,
+      'Request body format is not valid',
+    )(''),
+    REQUIRED_FIELDS_MISSING: createMessageResponse(
+      400,
       'Request body does not contain required fields',
     )(''),
   },
@@ -42,6 +43,14 @@ export const responses: Responses = {
     SUCCESS: createDataResponse(200),
     INVALID_ID: createMessageResponse(400, 'User id is not valid'),
     NOT_EXIST: createMessageResponse(404, "User with id doesn't exist"),
+    BAD_REQUEST_PARAMS: createMessageResponse(
+      400,
+      'Request body format is not valid',
+    )(''),
+    REQUIRED_FIELDS_MISSING: createMessageResponse(
+      400,
+      'Request body does not contain required fields',
+    )(''),
   },
   deleteUser: {
     SUCCESS: createMessageResponse(204, 'User with id was deleted'),

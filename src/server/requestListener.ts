@@ -1,7 +1,13 @@
 import { IncomingMessage, ServerResponse } from 'http';
 import { responses } from '../common/responses';
-import { ErrorMessage, SuccessMessage } from '../common/types';
-import { useCreateUser, useGetUsers } from '../common/actionHooks';
+import { Message } from '../common/types';
+import {
+  useCreateUser,
+  useDeleteUser,
+  useReadUserById,
+  useReadUsers,
+  useUpdateUser,
+} from '../common/actions';
 
 const API_PATH = '/api/users';
 const CONTENT_TYPE = { 'Content-Type': 'application/json' };
@@ -13,8 +19,7 @@ const requestListener = async (
   const url = request.url;
   const method = request.method;
 
-  let responseData: ErrorMessage | SuccessMessage =
-    responses.serverErrors.BROKEN_ROUTE;
+  let responseData: Message = responses.serverErrors.BROKEN_ROUTE;
 
   if (url?.startsWith(API_PATH)) {
     const endPoint = url.replace(API_PATH, '');
@@ -23,11 +28,16 @@ const requestListener = async (
     if (userID) {
       switch (method) {
         case 'GET':
-          responseData = responses.getUser.NOT_EXIST(userID);
+          responseData = useReadUserById(userID);
           break;
         case 'PUT':
+          responseData = (await useUpdateUser(
+            userID,
+            request,
+          )) as typeof responseData;
           break;
         case 'DELETE':
+          responseData = await useDeleteUser(userID);
           break;
         default:
           break;
@@ -35,7 +45,7 @@ const requestListener = async (
     } else if (endPoint === '' || endPoint === '/') {
       switch (method) {
         case 'GET':
-          responseData = useGetUsers();
+          responseData = useReadUsers();
           break;
         case 'POST':
           responseData = (await useCreateUser(request)) as typeof responseData;
