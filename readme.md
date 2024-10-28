@@ -9,7 +9,33 @@ To start the application, please make sure you have [Git](https://git-scm.com) a
 1. Clone repository: `git clone https://github.com/GoodValts/CRUD-API.git`
 1. Navigate to the project directory: `cd CRUD-API`
 1. Switch to 'develop' branch: `git checkout develop`
-1. TBD..
+1. Try to send requests
+
+#### Examples:
+
+```
+curl -X GET http://localhost:3001/api/users/
+```
+
+```
+curl -X GET http://localhost:3001/api/users/{id}
+```
+
+```
+curl -X POST http://localhost:3001/api/users/ \
+-H "Content-Type: application/json" \
+-d '{"username": "Jesus", "age": 2, "hobbies": ["traveling"]}'
+```
+
+```
+curl -X PUT http://localhost:3001/api/users/{id} \
+-H "Content-Type: application/json" \
+-d '{"username": "Jesus", "age": 30, "hobbies": ["traveling", "talking"]}'
+```
+
+```
+curl -X DELETE http://localhost:3001/api/users/{id}
+```
 
 ## Commands:
 
